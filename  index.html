@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>سایت خبری من</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background 0.5s, color 0.5s;
+      animation: fadeInDown 1s;
+    }
+
+    nav {
+      padding: 12px;
+      text-align: center;
+      transition: background 0.5s;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffd600;
+    }
+
+    .mode-buttons {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .mode-buttons button {
+      padding: 8px 15px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .light-btn { background: #c62828; color: #fff; }
+    .dark-btn { background: #333; color: #fff; }
+    .reading-btn { background: #deb887; color: #333; }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+
+    .news-card {
+      display: flex;
+      flex-wrap: wrap;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, background 0.5s, color 0.5s;
+      gap: 20px;
+      animation: fadeInUp 1s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .news-card img {
+      width: 200px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      animation: zoomIn 0.8s;
+    }
+
+    .news-card .news-content h2 {
+      margin-top: 0;
+      transition: color 0.5s;
+    }
+
+    .news-card .author {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .comments-section {
+      margin-top: 15px;
+    }
+
+    .comments-section h3 {
+      margin-bottom: 10px;
+    }
+
+    .comments-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    .comments-list li {
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      animation: fadeInUp 0.5s;
+    }
+
+    .comment-form input, .comment-form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .comment-form button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #c62828;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    /* حالت شب */
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .news-card {
+      background: #1e1e1e;
+    }
+
+    body.dark-mode header {
+      background: #1b1b1b;
+      color: #fff;
+    }
+
+    body.dark-mode nav {
+      background: #333;
+    }
+
+    body.dark-mode .news-card .news-content h2 {
+      color: #ff5252;
+    }
+
+    body.dark-mode .news-card .author, 
+    body.dark-mode .comments-list li {
+      color: #ccc;
+      background: #2a2a2a;
+    }
+
+    body.dark-mode footer {
+      background: #222;
+      color: #ccc;
+    }
+
+    /* حالت مطالعه */
+    body.reading-mode {
+      background: #fdf6e3;
+      color: #333;
+    }
+
+    body.reading-mode .news-card {
+      background: #fff9e6;
+    }
+
+    body.reading-mode header {
+      background: #f5deb3;
+      color: #333;
+    }
+
+    body.reading-mode nav {
+      background: #deb887;
+    }
+
+    body.reading-mode .news-card .news-content h2 {
+      color: #b35618;
+    }
+
+    body.reading-mode .news-card .author, 
+    body.reading-mode .comments-list li {
+      color: #333;
+      background: #fff3d9;
+    }
+
+    body.reading-mode footer {
+      background: #f5deb3;
+      color: #333;
+    }
+
+    /* انیمیشن‌ها */
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.8);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+
+    /* واکنش‌گرایی */
+    @media (max-width: 768px) {
+      .news-card {
+        flex-direction: column;
+        align-items: center;
+      }
+      .news-card img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+  </style>
+</head>
+<body class="light-mode">
+
+  <header>
+    <h1>📰 سایت خبری من</h1>
+    <p>جدیدترین خبرها را همین‌جا بخوانید</p>
+  </header>
+
+  <nav>
+    <a href="#">خانه</a>
+    <a href="#">سیاسی</a>
+    <a href="#">ورزشی</a>
+    <a href="#">فناوری</a>
+    <a href="#">اجتماعی</a>
+  </nav>
+
+  <div class="mode-buttons">
+    <button class="light-btn" onclick="setMode('light')">حالت روز</button>
+    <button class="dark-btn" onclick="setMode('dark')">حالت شب</button>
+    <button class="reading-btn" onclick="setMode('reading')">حالت مطالعه</button>
+  </div>
+
+  <div class="container">
+
+    <!-- خبر اول -->
+    <div class="news-card">
+      <img src="images/news1.jpg" alt="خبر اول">
+      <div class="news-content">
+        <h2>📌 اولین خبر تستی</h2>
+        <div class="author">نویسنده: علی ساداتی</div>
+        <p>این اولین خبر آزمایشی است. بعداً می‌توانید اخبار واقعی اضافه کنید.</p>
+
+        <!-- بخش نظرات -->
+        <div class="comments-section">
+          <h3>نظرات کاربران:</h3>
+          <ul class="comments-list"></ul>
+
+          <form class="comment-form">
+            <input type="text" placeholder="نام شما" class="comment-name" required>
+            <textarea placeholder="نظر شما" class="comment-text" required></textarea>
+            <button type="submit">ثبت نظر</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- خبر دوم -->
+    <div class="news-card">
+      <img src="images/news2.jpg" alt="خبر ورزشی">
+      <div class="news-content">
+        <h2>⚽ خبر ورزشی تستی</h2>
+        <div class="author">نویسنده: سارا رضایی</div>
+        <p>متن نمونه برای خبر ورزشی قرار داده شده است.</p>
+
+        <div class="comments-section">
+          <h3>نظرات کاربران:</h3>
+          <ul class="comments-list"></ul>
+          <form class="comment-form">
+            <input type="text" placeholder="نام شما" class="comment-name" required>
+            <textarea placeholder="نظر شما" class="comment-text" required></textarea>
+            <button type="submit">ثبت نظر</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- خبر سوم -->
+    <div class="news-card">
+      <img src="images/news3.jpg" alt="خبر فناوری">
+      <div class="news-content">
+        <h2>💻 خبر فناوری تستی</h2>
+        <div class="author">نویسنده: محمد حسینی</div>
+        <p>متن نمونه برای بخش فناوری. تصاویر و لینک‌های بیشتر قابل اضافه‌کردن است.</p>
+
+        <div class="comments-section">
+          <h3>نظرات کاربران:</h3>
+          <ul class="comments-list"></ul>
+          <form class="comment-form">
+            <input type="text" placeholder="نام شما" class="comment-name" required>
+            <textarea placeholder="نظر شما" class="comment-text" required></textarea>
+            <button type="submit">ثبت نظر</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>تمامی حقوق محفوظ است © 2025</p>
+  </footer>
+
+  <script>
+    function setMode(mode) {
+      document.body.classList.remove('dark-mode', 'reading-mode', 'light-mode');
+      if(mode === 'dark') document.body.classList.add('dark-mode');
+      else if(mode === 'reading') document.body.classList.add('reading-mode');
+      else document.body.classList.add('light-mode');
+    }
+
+    // اسکریپت ثبت نظر
+    document.querySelectorAll('.comment-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = this.querySelector('.comment-name').value;
+        const text = this.querySelector('.comment-text').value;
+
+        if(name && text) {
+          const li = document.createElement('li');
+          li.textContent = name + ": " + text;
+          this.parentElement.querySelector('.comments-list').appendChild(li);
+
+          // پاک کردن فرم بعد از ارسال
+          this.reset();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
